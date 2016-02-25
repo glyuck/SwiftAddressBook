@@ -62,7 +62,11 @@ public class SwiftAddressBookPerson : SwiftAddressBookRecord {
 	}
 
 	public var image : UIImage? {
-		return ABPersonHasImageData(internalRecord) ? UIImage(data: ABPersonCopyImageData(internalRecord).takeRetainedValue()) : nil
+		if let imageData = ABPersonCopyImageData(internalRecord)?.takeRetainedValue() {
+			return UIImage(data: imageData)
+		} else {
+			return nil
+		}
 	}
 
 	public func imageDataWithFormat(format : SwiftAddressBookPersonImageFormat) -> UIImage? {
